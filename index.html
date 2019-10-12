@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lucky!</title>
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    
+    <button id="go" data-text-start="YOU !" data-text-stop="Hi, Boys And Girls ~" data-action="start"></button>
+
+    <div id="container">
+      <ul id="balls">
+      </ul>
+      <ul id="lucky-balls">
+      </ul>
+    </div>
+
+    <script src="sea.js"></script>
+    <script>
+      seajs.use(['./lucky', './boys-and-girls'], function(Lucky, data) {
+        Lucky.init(data)
+      })
+    </script>
+  </body>
+</html>
