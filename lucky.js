@@ -12,13 +12,15 @@ define(function(require, exports, module) {
   var LUCKY_BALL_HEIGHT = 200
   var MAX_ZINDEX = 100
 
-  var DURATION_MIN = 100
-  var DURATION_MAX = 500
+  var DURATION_MIN = 500
+  var DURATION_MAX = 1000
   var ZOOM_DURATION = 500
   var HIT_SPEED = 100
 
-  var RIGIDITY = 4 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
+  var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
+  var dis_num = 200
+//  var max_num = 1000
 
   function User(name, options) {
     this.name = name
@@ -148,7 +150,8 @@ define(function(require, exports, module) {
   module.exports = {
 
     users: [],
-
+    dis_start:0,
+    times:0,
     init: function(data) {
       this.data = data
 
@@ -227,18 +230,30 @@ define(function(require, exports, module) {
     start: function() {
       this.timer && clearTimeout(this.timer)
       this.moveLucky()
+      
+      this.times++
+      if(this.times*dis_num>this.users.length)this.times=0
+      this.dis_start = this.times * dis_num 
 
-      this.users.forEach(function(user) {
+      for(var i=this.dis_start;i<this.dis_start+dis_num;i++){
+        this.users[i].start()
+      }
+
+      /*this.users.forEach(function(user) {
         user.start()
-      })
+      })*/
     },
 
     stop: function() {
       var users = this.users
       var z = 0, lucky = users[0]
+//未考虑dis_start+dis_num>users.length情况
+      for(var i=this.dis_start;i<this.dis_start+dis_num;i++){
+        this.users[i].stop()
+      }
 
       users.forEach(function(user) {
-        user.stop()
+        //user.stop()
         if (z < user.zIndex) {
           lucky = user
           z = user.zIndex
