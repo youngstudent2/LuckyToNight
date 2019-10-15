@@ -162,7 +162,7 @@ define(function(require, exports, module) {
     init: function(data) {
       this.data = data
     
-      this.users = data.slice(0,dis_num - 1).map(function(name) {
+      this.users = data.slice(0,dis_num).map(function(name) {
         return new User(name);
       })
 
@@ -248,7 +248,7 @@ define(function(require, exports, module) {
       console.log("num:",dis_num)
 
       for(var i=0;i<this.users.length;i++){
-        this.users[i].changeName(this.dis_start+i)
+        this.users[i].changeName(this.data[this.dis_start+i])
         this.users[i].start()
       }
 
@@ -273,30 +273,36 @@ define(function(require, exports, module) {
         }
       })*/
       var luckyNum = r(0,this.data.length)
-      console.log(luckyNum)
-      if(luckyNum>this.dis_start&&luckyNum<this.dis_end)
-        lucky = user[luckyNum-this.dis_start]
+      //console.log(this.data[luckyNum],' ',luckyNum)
+      //console.log(users)
+      if(luckyNum>=this.dis_start&&luckyNum<this.dis_end){
+        console.log('here:',luckyNum-this.dis_start)
+        lucky = users[luckyNum-this.dis_start]
+      }  
       else{
         //new a User as a lucky one
         //BUG : no lucky ball display
         //consider replace 
-        lucky=new User(this.data[luckyNum])
-        this.users.push(lucky)
+        users[0].changeName(this.data[luckyNum])
+        lucky=users[0]
+        //console.log(lucky)
       }
+      lucky.bang()
       this.hit()
       this.luckyNum = luckyNum
       this.luckyUser = lucky
     },
 
     removeItem: function(item, num) {
+      /**/
       for (var i = 0; i < this.users.length; i++) {
         var user = this.users[i]
         if (user === item) {
           this.users.splice(i, 1)
         }
       }
+      this.users.push(new User(0))
       this.data.splice(num,1);
-      //完成了清除工作
     },
 
     addItem: function(name, options) {
