@@ -56,6 +56,13 @@ define(function(require, exports, module) {
     this.reflow(callback)
   }
 
+  User.prototype.changeName = function(newName){
+    this.name = newName
+    this.el[0].textContent = newName
+    //console.log(this.el[0].textContent)
+ 
+  }
+
   User.prototype.reflow = function(callback, direct) {
     this.x = this.left + this.width / 2
     this.y = this.top + this.height / 2
@@ -151,11 +158,11 @@ define(function(require, exports, module) {
 
     users: [],
     dis_start:0,
-    times:0,
+    dis_end:0,
     init: function(data) {
       this.data = data
-
-      this.users = data.map(function(name) {
+    
+      this.users = data.slice(0,dis_num - 1).map(function(name) {
         return new User(name);
       })
 
@@ -230,12 +237,18 @@ define(function(require, exports, module) {
     start: function() {
       this.timer && clearTimeout(this.timer)
       this.moveLucky()
-      
-      this.times++
-      if(this.times*dis_num>this.users.length)this.times=0
-      this.dis_start = this.times * dis_num 
 
-      for(var i=this.dis_start;i<this.dis_start+dis_num;i++){
+      this.dis_start+=dis_num
+      if(this.dis_start+dis_num>this.data.length){
+        this.dis_start=0
+      }
+      this.dis_end=this.dis_start+dis_num
+      console.log("start:",this.dis_start)
+      console.log("end:",this.dis_end)
+      console.log("num:",dis_num)
+
+      for(var i=0;i<this.users.length;i++){
+        this.users[i].changeName(this.dis_start+i)
         this.users[i].start()
       }
 
@@ -247,31 +260,43 @@ define(function(require, exports, module) {
     stop: function() {
       var users = this.users
       var z = 0, lucky = users[0]
-//未考虑dis_start+dis_num>users.length情况
-      for(var i=this.dis_start;i<this.dis_start+dis_num;i++){
+
+      for(var i=0;i<this.users.length;i++){
         this.users[i].stop()
       }
-
+      /*
       users.forEach(function(user) {
         //user.stop()
         if (z < user.zIndex) {
           lucky = user
           z = user.zIndex
         }
-      })
-
-      lucky.bang()
+      })*/
+      var luckyNum = r(0,this.data.length)
+      console.log(luckyNum)
+      if(luckyNum>this.dis_start&&luckyNum<this.dis_end)
+        lucky = user[luckyNum-this.dis_start]
+      else{
+        //new a User as a lucky one
+        //BUG : no lucky ball display
+        //consider replace 
+        lucky=new User(this.data[luckyNum])
+        this.users.push(lucky)
+      }
       this.hit()
+      this.luckyNum = luckyNum
       this.luckyUser = lucky
     },
 
-    removeItem: function(item) {
+    removeItem: function(item, num) {
       for (var i = 0; i < this.users.length; i++) {
         var user = this.users[i]
         if (user === item) {
           this.users.splice(i, 1)
         }
       }
+      this.data.splice(num,1);
+      //完成了清除工作
     },
 
     addItem: function(name, options) {
@@ -283,7 +308,7 @@ define(function(require, exports, module) {
       if (luckyUser) {
         luckyUser.el[0].style.cssText = ''
         luckyUser.el.prependTo('#lucky-balls')
-        this.removeItem(luckyUser)
+        this.removeItem(luckyUser, this.luckyNum)
         this.luckyUser = null
       }
     },
