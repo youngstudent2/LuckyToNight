@@ -190,6 +190,11 @@ define(function(require, exports, module) {
         }
       }
 
+      $('#btn1').on('click', function(){
+        
+        that.start();
+      })
+
       // bind #lucky-balls
       $('#lucky-balls').on('click', 'li', function(e) {
         var el = $(e.target)

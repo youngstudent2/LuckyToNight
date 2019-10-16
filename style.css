@@ -11,11 +11,29 @@ ul li {
   display: flex;
 }
 
+.btn{
+  width: 70%;
+  height: 30px;
+  background-color: rgb(224, 186, 58);
+  border-radius: 25px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.btn :hover{
+  background-color: #f06;
+  box-shadow: 3px;
+}
+
+
 #buttons{
+  padding: 20px;
   width: 250px;
   background: #ddd;
   margin: 40px;
   display: block;
+  align-items: center;
 }
 
 #container {
