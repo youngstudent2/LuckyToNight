@@ -12,10 +12,10 @@ define(function(require, exports, module) {
   var LUCKY_BALL_HEIGHT = 200
   var MAX_ZINDEX = 100
 
-  var DURATION_MIN = 500
-  var DURATION_MAX = 1000
-  var ZOOM_DURATION = 500
-  var HIT_SPEED = 100
+  var DURATION_MIN = 1000
+  var DURATION_MAX = 1500
+  var ZOOM_DURATION = 1000
+  var HIT_SPEED = 10
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
@@ -280,9 +280,6 @@ define(function(require, exports, module) {
         lucky = users[luckyNum-this.dis_start]
       }  
       else{
-        //new a User as a lucky one
-        //BUG : no lucky ball display
-        //consider replace 
         users[0].changeName(this.data[luckyNum])
         lucky=users[0]
         //console.log(lucky)

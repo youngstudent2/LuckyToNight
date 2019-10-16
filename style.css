@@ -7,6 +7,17 @@ ul li {
   list-style: none;
 }
 
+#main{
+  display: flex;
+}
+
+#buttons{
+  width: 250px;
+  background: #ddd;
+  margin: 40px;
+  display: block;
+}
+
 #container {
   width: 900px;
   margin: 10px auto;
