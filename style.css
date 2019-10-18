@@ -12,13 +12,15 @@ ul li {
 }
 
 .btn{
-  width: 70%;
-  height: 30px;
-  background-color: rgb(224, 186, 58);
-  border-radius: 25px;
+  width: 80%;
+  height: 50px;
+  background-color: rgb(243, 194, 32);
+  border-radius: 40px;
   margin: auto;
   text-align: center;
   margin-bottom: 20px;
+  font-size: 30px;
+  font-family: 'STKaiti';
 }
 
 .btn :hover{
@@ -33,7 +35,9 @@ ul li {
   background: #ddd;
   margin: 40px;
   display: block;
+  justify-content: center;
   align-items: center;
+
 }
 
 #container {
@@ -46,7 +50,7 @@ ul li {
   padding: 0;
   margin: 0;
   list-style: none;
-  height: 500px;
+  height: 700px;
 }
 
 #balls li,
@@ -55,15 +59,15 @@ ul li {
   left: 420px;
   top: 470px;
   padding: 0;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   overflow: hidden;
   font-size: 9px;
   background: #333;
   color: #ddd;
   opacity: .5;
   text-align: center;
-  line-height: 60px;
+  line-height: 50px;
   border-radius: 30px;
   word-break: keep-all;
   cursor: pointer;
@@ -91,11 +95,11 @@ nav a {
 #balls li.selected {
   color: #fff;
   background: #f60;
-  font-size: 31px;
-  height: 200px;
-  width: 200px;
-  line-height: 200px;
-  border-radius: 100px;
+  font-size: 60px;
+  height: 300px;
+  width: 300px;
+  line-height: 300px;
+  border-radius: 200px;
   -webkit-transition: 0.3s ease-in;
   -webkit-transition-property: width, height, font;
   z-index: 100;
@@ -103,7 +107,7 @@ nav a {
 
 #lucky-balls {
   padding: 20px;
-  margin: 10px 0;
+  margin: auto;
   list-style: none;
 }
 
@@ -111,11 +115,21 @@ nav a {
   position: relative;
   left: auto !important;
   top: auto !important;
-  width: 60px !important;
-  height: 60px !important;
+  width: 80px !important;
+  height: 80px !important;
   float: left;
-  margin: 5px 10px;
+  margin:10px;
+  line-height: 80px;
+  border-radius: 45px;
+  font-size:30px;
   font-weight: bold;
   color: #fff;
   background: #f60;
+}
+
+#lucky-container{
+  width:200px;
+  background:#ddd;
+  padding:20px;
+  margin:40px
 }

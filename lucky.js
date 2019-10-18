@@ -2,24 +2,23 @@ define(function(require, exports, module) {
 
   var $ = require('./jquery')
   require('./easing')
-
-  var CANVAS_HEIGHT = 500
+  require('./velocity')
+  var CANVAS_HEIGHT = 700
   var CANVAS_WIDTH = 900
 
-  var BALL_WIDTH = 60
-  var BALL_HEIGHT = 60
-  var LUCKY_BALL_WIDTH = 200
-  var LUCKY_BALL_HEIGHT = 200
-  var MAX_ZINDEX = 100
+  var BALL_WIDTH = 50
+  var BALL_HEIGHT = 50
+  var LUCKY_BALL_WIDTH = 300
+  var LUCKY_BALL_HEIGHT = 300
 
-  var DURATION_MIN = 1000
-  var DURATION_MAX = 1500
+  var DURATION_MIN = 500
+  var DURATION_MAX = 1000
   var ZOOM_DURATION = 1000
   var HIT_SPEED = 10
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
-  var dis_num = 200
+  var dis_num = 300
 //  var max_num = 1000
 
   function User(name, options) {
@@ -51,9 +50,19 @@ define(function(require, exports, module) {
   User.prototype.move = function(callback) {
     this.left = r(0, CANVAS_WIDTH - this.width)
     this.top = r(0, CANVAS_HEIGHT - this.height)
-    this.zIndex = r(0, MAX_ZINDEX)
-
-    this.reflow(callback)
+    //this.zIndex = r(0, MAX_ZINDEX)
+    /**/
+    this.x = this.left + this.width / 2
+    this.y = this.top + this.height / 2
+    Velocity(this.el,{
+      'left': this.left,
+      'top': this.top
+    },{
+      duration: r(DURATION_MIN, DURATION_MAX),
+      easing: "easeInSine",
+      complete: callback
+    })
+    //this.reflow(callback)
   }
 
   User.prototype.changeName = function(newName){
@@ -66,18 +75,26 @@ define(function(require, exports, module) {
   User.prototype.reflow = function(callback, direct) {
     this.x = this.left + this.width / 2
     this.y = this.top + this.height / 2
-    this.el[0].style.zIndex = this.zIndex
+    //this.el[0].style.zIndex = this.zIndex
 
     if (direct) {
       this.el[0].style.left = this.left
       this.el[0].style.top = this.top
     }
     else {
-      this.el.animate({
+       this.el.animate({
         'left': this.left,
         'top': this.top
       }, r(DURATION_MIN, DURATION_MAX), 'easeOutBack', callback)
-
+      
+     /*Velocity(this.el,{
+        'left': this.left,
+        'top': this.top
+      },{
+        duration: r(DURATION_MIN, DURATION_MAX),
+        easing: "easeOutSine",
+        complete: callback
+      })*/
     }
   }
 
@@ -104,7 +121,7 @@ define(function(require, exports, module) {
 
   User.prototype.autoMove = function() {
     var that = this
-
+   
     if (this.moving) {
       this.move(function() {
         that.autoMove()
@@ -127,7 +144,19 @@ define(function(require, exports, module) {
     this.left = (CANVAS_WIDTH - this.width) / 2
     this.top = (CANVAS_HEIGHT - this.height) / 2
 
-    this.zooming = true
+   /* this.zooming = true
+    Velocity(this.el,{
+      'left': this.left,
+      'top': this.top,
+      'width': this.width,
+      'height': this.height
+    },{
+      duration:ZOOM_DURATION,
+      complete:function() {
+        that.zooming = false
+      }
+    })*/
+    
     this.el.animate({
       'left': this.left,
       'top': this.top,
@@ -174,9 +203,19 @@ define(function(require, exports, module) {
 
       // bind button
       var trigger = document.querySelector('#go')
+      var firstButton = document.querySelector('#first')
+      var secondButton = document.querySelector('#second')
+      var thirdButton = document.querySelector('#third')
+      var luckys=document.querySelector('#lucky-balls')
+      var luckyButton1 = document.querySelector('#lucky-prize1')
+      var luckyButton2 = document.querySelector('#lucky-prize2')
       trigger.innerHTML = trigger.getAttribute('data-text-start')
       trigger.addEventListener('click', go, false)
-
+      firstButton.addEventListener('click', go1, false)
+      secondButton.addEventListener('click',go2, false)
+      thirdButton.addEventListener('click', go3, false)
+      luckyButton1.addEventListener('click',go4, false)
+      luckyButton2.addEventListener('click',go5, false)
       function go() {
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
@@ -190,10 +229,53 @@ define(function(require, exports, module) {
         }
       }
 
-      $('#btn1').on('click', function(){
-        
-        that.start();
-      })
+      function go1() {
+        if (trigger.getAttribute('data-action') === 'start') {
+          trigger.setAttribute('data-action', 'stop')
+          trigger.innerHTML = firstButton.getAttribute('data-text-stop')
+          that.start()
+        }
+        else {
+          trigger.setAttribute('data-action', 'start')
+          trigger.innerHTML = firstButton.getAttribute('data-text-start')
+          that.stop()
+        }
+      }
+
+      function go1_auto(){
+        if(luckys.innerHTML.length>0){
+          luckys.innerHTML = ''
+        }
+        go1()
+        setTimeout(go1,2222)
+      }
+
+      function go2() {
+        if (trigger.getAttribute('data-action') === 'start') {
+          trigger.setAttribute('data-action', 'stop')
+          trigger.innerHTML = secondButton.getAttribute('data-text-stop')
+          that.start()
+        }
+        else {
+          trigger.setAttribute('data-action', 'start')
+          trigger.innerHTML = secondButton.getAttribute('data-text-start')
+          that.stop()
+        }
+      }
+
+      function go3() {
+        if (trigger.getAttribute('data-action') === 'start') {
+          trigger.setAttribute('data-action', 'stop')
+          trigger.innerHTML = thirdButton.getAttribute('data-text-stop')
+          that.start()
+        }
+        else {
+          trigger.setAttribute('data-action', 'start')
+          trigger.innerHTML = thirdButton.getAttribute('data-text-start')
+          that.stop()
+        }
+      }
+
 
       // bind #lucky-balls
       $('#lucky-balls').on('click', 'li', function(e) {
@@ -281,7 +363,6 @@ define(function(require, exports, module) {
       //console.log(this.data[luckyNum],' ',luckyNum)
       //console.log(users)
       if(luckyNum>=this.dis_start&&luckyNum<this.dis_end){
-        console.log('here:',luckyNum-this.dis_start)
         lucky = users[luckyNum-this.dis_start]
       }  
       else{
@@ -338,7 +419,7 @@ define(function(require, exports, module) {
       users.forEach(function(user) {
         user.beginHit()
       })
-
+//console.log("begin hit")
       for (var i = 0; i < users.length; i++) {
         for (var j = i + 1; j < users.length; j++) {
           if (isOverlap(users[i], users[j])) {
