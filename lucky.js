@@ -197,7 +197,7 @@ define(function(require, exports, module) {
 
     _bindUI: function() {
       var that = this
-
+      var s = false
       // bind button
       var trigger = document.querySelector('#go')
       var firstButton = document.querySelector('#first')
@@ -302,7 +302,7 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
-          console.log("set wait")
+          
         }, 30010);
       }
       function go4() {
@@ -332,7 +332,7 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
-          console.log("set wait")
+         
         }, 30010);
       }
       function go5() {
@@ -362,7 +362,6 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
-          console.log("set wait")
         }, 30010);
       }
 
@@ -385,7 +384,7 @@ define(function(require, exports, module) {
       $('#balls').on('click', 'li', function(e) {
         var el = $(e.target)
         var name = el.text()
-
+        that.s=true
         for (var i = 0; i < that.users.length; i++) {
           var user = that.users[i]
 
@@ -414,7 +413,14 @@ define(function(require, exports, module) {
 
     start: function() {
       this.timer && clearTimeout(this.timer)
-      this.moveLucky()
+      if(this.s){
+        this.s=false
+      }
+      else {
+ 
+        this.moveLucky()
+      }
+      
 
       this.dis_start+=dis_num
       if(this.dis_start+dis_num>this.data.length){
