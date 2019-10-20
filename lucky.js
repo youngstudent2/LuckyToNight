@@ -290,6 +290,7 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
+          console.log("set wait")
         }, 30010);
       }
       function go4() {
@@ -319,6 +320,7 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
+          console.log("set wait")
         }, 30010);
       }
       function go5() {
@@ -336,10 +338,8 @@ define(function(require, exports, module) {
 
       function go5_auto() {
         if(trigger.getAttribute('data-running') === 'running')
-        return
-      else trigger.setAttribute('data-running', 'running')
-        if(trigger.getAttribute('data-running') === 'running')
           return
+        else trigger.setAttribute('data-running', 'running')
         if(luckys.innerHTML.length>0){
           that.moveLucky()
           luckys.innerHTML = ''
@@ -350,6 +350,7 @@ define(function(require, exports, module) {
         }
         setTimeout(() => {
           trigger.setAttribute('data-running', 'wait')
+          console.log("set wait")
         }, 30010);
       }
 
