@@ -18,8 +18,7 @@ define(function(require, exports, module) {
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
-  var dis_num = 300
-//  var max_num = 1000
+  var dis_num = 300 //一次抽奖显示的球的个数
 
   function User(name, options) {
     this.name = name
@@ -50,8 +49,7 @@ define(function(require, exports, module) {
   User.prototype.move = function(callback) {
     this.left = r(0, CANVAS_WIDTH - this.width)
     this.top = r(0, CANVAS_HEIGHT - this.height)
-    //this.zIndex = r(0, MAX_ZINDEX)
-    /**/
+
     this.x = this.left + this.width / 2
     this.y = this.top + this.height / 2
     Velocity(this.el,{
@@ -68,7 +66,6 @@ define(function(require, exports, module) {
   User.prototype.changeName = function(newName){
     this.name = newName
     this.el[0].textContent = newName
-    //console.log(this.el[0].textContent)
  
   }
 
@@ -144,7 +141,6 @@ define(function(require, exports, module) {
     this.height = LUCKY_BALL_HEIGHT
     this.left = (CANVAS_WIDTH - this.width) / 2
     this.top = (CANVAS_HEIGHT - this.height) / 2
-    console.log(ZOOM_DURATION)
     this.zooming = true
     Velocity(this.el,{
       'left': this.left,
@@ -329,7 +325,7 @@ define(function(require, exports, module) {
       }
 
 
-/**/
+
       // bind #lucky-balls
       $('#lucky-balls').on('click', 'li', function(e) {
         var el = $(e.target)
@@ -342,7 +338,7 @@ define(function(require, exports, module) {
           el.remove()
         }
       })
-
+/*
       // bind #balls
       $('#balls').on('click', 'li', function(e) {
         var el = $(e.target)
@@ -371,7 +367,7 @@ define(function(require, exports, module) {
           $('#lucky-balls li').eq(0).click()
         }
       }, false)
-
+*/
     },
 
     start: function() {
@@ -383,18 +379,11 @@ define(function(require, exports, module) {
         this.dis_start=0
       }
       this.dis_end=this.dis_start+dis_num
-      console.log("start:",this.dis_start)
-      console.log("end:",this.dis_end)
-      console.log("num:",dis_num)
 
       for(var i=0;i<this.users.length;i++){
         this.users[i].changeName(this.data[this.dis_start+i])
         this.users[i].start()
       }
-
-      /*this.users.forEach(function(user) {
-        user.start()
-      })*/
     },
 
     stop: function() {
@@ -461,7 +450,6 @@ define(function(require, exports, module) {
       users.forEach(function(user) {
         user.beginHit()
       })
-//console.log("begin hit")
       for (var i = 0; i < users.length; i++) {
         for (var j = i + 1; j < users.length; j++) {
           if (isOverlap(users[i], users[j])) {
