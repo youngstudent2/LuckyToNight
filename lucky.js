@@ -82,20 +82,21 @@ define(function(require, exports, module) {
       this.el[0].style.top = this.top
     }
     else {
+      
        this.el.animate({
         'left': this.left,
         'top': this.top
       }, r(DURATION_MIN, DURATION_MAX), 'easeOutBack', callback)
-      
-     /*Velocity(this.el,{
+     /*
+     Velocity(this.el,{
         'left': this.left,
         'top': this.top
       },{
         duration: r(DURATION_MIN, DURATION_MAX),
-        easing: "easeOutSine",
+        easing: "easeInSine",
         complete: callback
       })*/
-    }
+    } 
   }
 
   User.prototype.start = function() {
@@ -143,8 +144,8 @@ define(function(require, exports, module) {
     this.height = LUCKY_BALL_HEIGHT
     this.left = (CANVAS_WIDTH - this.width) / 2
     this.top = (CANVAS_HEIGHT - this.height) / 2
-
-   /* this.zooming = true
+    console.log(ZOOM_DURATION)
+    this.zooming = true
     Velocity(this.el,{
       'left': this.left,
       'top': this.top,
@@ -155,8 +156,8 @@ define(function(require, exports, module) {
       complete:function() {
         that.zooming = false
       }
-    })*/
-    
+    })
+    /*
     this.el.animate({
       'left': this.left,
       'top': this.top,
@@ -164,7 +165,7 @@ define(function(require, exports, module) {
       'height': this.height
     }, ZOOM_DURATION, function() {
       that.zooming = false
-    })
+    })*/
   }
 
   User.prototype.beginHit = function() {
@@ -214,7 +215,7 @@ define(function(require, exports, module) {
       firstButton.addEventListener('click', go1, false)
       secondButton.addEventListener('click',go2, false)
       thirdButton.addEventListener('click', go3, false)
-      luckyButton1.addEventListener('click',go4, false)
+      luckyButton1.addEventListener('click',go4_auto, false)
       luckyButton2.addEventListener('click',go5, false)
       function go() {
         if (trigger.getAttribute('data-action') === 'start') {
@@ -229,7 +230,8 @@ define(function(require, exports, module) {
         }
       }
 
-      function go1() {
+      function go1(e) {
+        console.log(e)
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
           trigger.innerHTML = firstButton.getAttribute('data-text-stop')
@@ -276,7 +278,32 @@ define(function(require, exports, module) {
         }
       }
 
+      function go4() {
+        if (trigger.getAttribute('data-action') === 'start') {
+          trigger.setAttribute('data-action', 'stop')
+          trigger.innerHTML = luckyButton1.getAttribute('data-text-stop')
+          that.start()
+        }
+        else {
+          trigger.setAttribute('data-action', 'start')
+          trigger.innerHTML = luckyButton1.getAttribute('data-text-start')
+          that.stop()
+        }
+      }
 
+      function go4_auto() {
+        go4()
+        ZOOM_DURATION = 500
+        for(var i=0;i<7;i++){
+          setTimeout(go4,2000+i*2000)
+          //setTimeout(go4,3000+i*1000)
+        }
+        //setTimeout(go4,6500)
+        setTimeout(function(){ZOOM_DURATION=1000},3500)
+      }
+
+
+/**/
       // bind #lucky-balls
       $('#lucky-balls').on('click', 'li', function(e) {
         var el = $(e.target)
@@ -351,24 +378,13 @@ define(function(require, exports, module) {
       for(var i=0;i<this.users.length;i++){
         this.users[i].stop()
       }
-      /*
-      users.forEach(function(user) {
-        //user.stop()
-        if (z < user.zIndex) {
-          lucky = user
-          z = user.zIndex
-        }
-      })*/
       var luckyNum = r(0,this.data.length)
-      //console.log(this.data[luckyNum],' ',luckyNum)
-      //console.log(users)
       if(luckyNum>=this.dis_start&&luckyNum<this.dis_end){
         lucky = users[luckyNum-this.dis_start]
       }  
       else{
         users[0].changeName(this.data[luckyNum])
         lucky=users[0]
-        //console.log(lucky)
       }
       lucky.bang()
       this.hit()
