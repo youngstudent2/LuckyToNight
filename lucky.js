@@ -269,12 +269,11 @@ define(function(require, exports, module) {
       }
       go2()
       for(var i=0;i<7;i++){
-        setTimeout(go2,2000+i*2000)
+        setTimeout(go2,2000+i*2200)
       }
       setTimeout(() => {
         trigger.setAttribute('data-running', 'wait')
-        //console.log("set wait")
-      }, 2010+6*2000);
+      }, 2010+6*2200);
 
       }
       function go3() {
