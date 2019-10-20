@@ -227,7 +227,10 @@ define(function(require, exports, module) {
       }
 
       function go1() {
+        if(trigger.getAttribute('data-running') === 'running')
+          return
         if(luckys.innerHTML.length>0){
+          that.moveLucky()
           luckys.innerHTML = ''
         }
         if (trigger.getAttribute('data-action') === 'start') {
@@ -243,7 +246,10 @@ define(function(require, exports, module) {
       }
 
       function go2() {
+        if(trigger.getAttribute('data-running') === 'running')
+          return
         if(luckys.innerHTML.length>0){
+          that.moveLucky()
           luckys.innerHTML = ''
         }
         if (trigger.getAttribute('data-action') === 'start') {
@@ -271,13 +277,20 @@ define(function(require, exports, module) {
         }
       }
       function go3_auto() {
+        if(trigger.getAttribute('data-running') === 'running')
+          return
+        else trigger.setAttribute('data-running', 'running')
         if(luckys.innerHTML.length>0){
+          that.moveLucky()
           luckys.innerHTML = ''
         }
         go3()
         for(var i=0;i<15;i++){
           setTimeout(go3,2000+i*2000)
         }
+        setTimeout(() => {
+          trigger.setAttribute('data-running', 'wait')
+        }, 30010);
       }
       function go4() {
         if (trigger.getAttribute('data-action') === 'start') {
@@ -293,13 +306,20 @@ define(function(require, exports, module) {
       }
 
       function go4_auto() {
+        if(trigger.getAttribute('data-running') === 'running')
+          return
+        else trigger.setAttribute('data-running', 'running')
         if(luckys.innerHTML.length>0){
+          that.moveLucky()
           luckys.innerHTML = ''
         }
         go4()
         for(var i=0;i<15;i++){
           setTimeout(go4,2000+i*2000)
         }
+        setTimeout(() => {
+          trigger.setAttribute('data-running', 'wait')
+        }, 30010);
       }
       function go5() {
         if (trigger.getAttribute('data-action') === 'start') {
@@ -315,13 +335,22 @@ define(function(require, exports, module) {
       }
 
       function go5_auto() {
+        if(trigger.getAttribute('data-running') === 'running')
+        return
+      else trigger.setAttribute('data-running', 'running')
+        if(trigger.getAttribute('data-running') === 'running')
+          return
         if(luckys.innerHTML.length>0){
+          that.moveLucky()
           luckys.innerHTML = ''
         }
         go5()
         for(var i=0;i<15;i++){
           setTimeout(go5,2000+i*2000)
         }
+        setTimeout(() => {
+          trigger.setAttribute('data-running', 'wait')
+        }, 30010);
       }
 
 
@@ -405,6 +434,7 @@ define(function(require, exports, module) {
       this.hit()
       this.luckyNum = luckyNum
       this.luckyUser = lucky
+ 
     },
 
     removeItem: function(item, num) {
