@@ -211,12 +211,12 @@ define(function(require, exports, module) {
       var luckyButton1 = document.querySelector('#lucky-prize1')
       var luckyButton2 = document.querySelector('#lucky-prize2')
       trigger.innerHTML = trigger.getAttribute('data-text-start')
-      trigger.addEventListener('click', go, false)
+      //trigger.addEventListener('click', go, false)
       firstButton.addEventListener('click', go1, false)
       secondButton.addEventListener('click',go2, false)
-      thirdButton.addEventListener('click', go3, false)
+      thirdButton.addEventListener('click', go3_auto, false)
       luckyButton1.addEventListener('click',go4_auto, false)
-      luckyButton2.addEventListener('click',go5, false)
+      luckyButton2.addEventListener('click',go5_auto, false)
       function go() {
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
@@ -230,8 +230,10 @@ define(function(require, exports, module) {
         }
       }
 
-      function go1(e) {
-        console.log(e)
+      function go1() {
+        if(luckys.innerHTML.length>0){
+          luckys.innerHTML = ''
+        }
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
           trigger.innerHTML = firstButton.getAttribute('data-text-stop')
@@ -244,15 +246,10 @@ define(function(require, exports, module) {
         }
       }
 
-      function go1_auto(){
+      function go2() {
         if(luckys.innerHTML.length>0){
           luckys.innerHTML = ''
         }
-        go1()
-        setTimeout(go1,2222)
-      }
-
-      function go2() {
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
           trigger.innerHTML = secondButton.getAttribute('data-text-stop')
@@ -277,7 +274,15 @@ define(function(require, exports, module) {
           that.stop()
         }
       }
-
+      function go3_auto() {
+        if(luckys.innerHTML.length>0){
+          luckys.innerHTML = ''
+        }
+        go3()
+        for(var i=0;i<15;i++){
+          setTimeout(go3,2000+i*2000)
+        }
+      }
       function go4() {
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
@@ -292,14 +297,35 @@ define(function(require, exports, module) {
       }
 
       function go4_auto() {
-        go4()
-        ZOOM_DURATION = 500
-        for(var i=0;i<7;i++){
-          setTimeout(go4,2000+i*2000)
-          //setTimeout(go4,3000+i*1000)
+        if(luckys.innerHTML.length>0){
+          luckys.innerHTML = ''
         }
-        //setTimeout(go4,6500)
-        setTimeout(function(){ZOOM_DURATION=1000},3500)
+        go4()
+        for(var i=0;i<15;i++){
+          setTimeout(go4,2000+i*2000)
+        }
+      }
+      function go5() {
+        if (trigger.getAttribute('data-action') === 'start') {
+          trigger.setAttribute('data-action', 'stop')
+          trigger.innerHTML = luckyButton2.getAttribute('data-text-stop')
+          that.start()
+        }
+        else {
+          trigger.setAttribute('data-action', 'start')
+          trigger.innerHTML = luckyButton2.getAttribute('data-text-start')
+          that.stop()
+        }
+      }
+
+      function go5_auto() {
+        if(luckys.innerHTML.length>0){
+          luckys.innerHTML = ''
+        }
+        go5()
+        for(var i=0;i<15;i++){
+          setTimeout(go5,2000+i*2000)
+        }
       }
 
 
