@@ -207,9 +207,9 @@ define(function(require, exports, module) {
       var luckyButton1 = document.querySelector('#lucky-prize1')
       var luckyButton2 = document.querySelector('#lucky-prize2')
       trigger.innerHTML = trigger.getAttribute('data-text-start')
-      //trigger.addEventListener('click', go, false)
+      trigger.addEventListener('click', go, false)
       firstButton.addEventListener('click', go1, false)
-      secondButton.addEventListener('click',go2, false)
+      secondButton.addEventListener('click',go2_auto, false)
       thirdButton.addEventListener('click', go3_auto, false)
       luckyButton1.addEventListener('click',go4_auto, false)
       luckyButton2.addEventListener('click',go5_auto, false)
@@ -246,12 +246,6 @@ define(function(require, exports, module) {
       }
 
       function go2() {
-        if(trigger.getAttribute('data-running') === 'running')
-          return
-        if(luckys.innerHTML.length>0){
-          that.moveLucky()
-          luckys.innerHTML = ''
-        }
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
           trigger.innerHTML = secondButton.getAttribute('data-text-stop')
@@ -264,6 +258,25 @@ define(function(require, exports, module) {
         }
       }
 
+      function go2_auto(){
+        if(trigger.getAttribute('data-running') === 'running')
+          return
+        else trigger.setAttribute('data-running', 'running')
+        if(luckys.innerHTML.length>0){
+          that.moveLucky()
+          luckys.innerHTML = ''
+          
+      }
+      go2()
+      for(var i=0;i<7;i++){
+        setTimeout(go2,2000+i*2000)
+      }
+      setTimeout(() => {
+        trigger.setAttribute('data-running', 'wait')
+        //console.log("set wait")
+      }, 2010+6*2000);
+
+      }
       function go3() {
         if (trigger.getAttribute('data-action') === 'start') {
           trigger.setAttribute('data-action', 'stop')
@@ -368,7 +381,7 @@ define(function(require, exports, module) {
           el.remove()
         }
       })
-/*
+
       // bind #balls
       $('#balls').on('click', 'li', function(e) {
         var el = $(e.target)
@@ -386,7 +399,7 @@ define(function(require, exports, module) {
           }
         }
       })
-
+/*
       // bind keydown
       document.addEventListener('keydown', function(ev) {
         if (ev.keyCode == '32') {
