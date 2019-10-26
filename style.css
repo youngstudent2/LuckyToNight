@@ -14,19 +14,16 @@ ul li {
 .btn{
   width: 80%;
   height: 50px;
-  background-color: rgb(243, 194, 32);
+  background-color: rgb(90,126,191);
   border-radius: 40px;
   margin: auto;
   text-align: center;
   margin-bottom: 20px;
   font-size: 30px;
   font-family: 'STKaiti';
+
 }
 
-.btn :hover{
-  background-color: #f06;
-  box-shadow: 3px;
-}
 
 
 #buttons{
@@ -38,6 +35,10 @@ ul li {
   justify-content: center;
   align-items: center;
 
+}
+
+.btn:hover{
+  background-color: rgb(73, 113, 189);
 }
 
 #container {
@@ -63,7 +64,7 @@ ul li {
   height: 50px;
   overflow: hidden;
   font-size: 9px;
-  background: #333;
+  background:rgb(90,126,191);
   color: #ddd;
   opacity: .5;
   text-align: center;
@@ -79,9 +80,10 @@ ul li {
   display: block;
   margin: 0 auto;
   font-size: 30px;
+  font-family: PingFangSC-Semibold, sans-serif;
   border: none;
   background: none;
-  color: #f60;
+  color: rgb(240,65,56);
 }
 
 nav {
@@ -94,7 +96,7 @@ nav a {
 
 #balls li.selected {
   color: #fff;
-  background: #f60;
+  background: rgb(240,65,56);
   font-size: 60px;
   height: 300px;
   width: 300px;
@@ -124,7 +126,7 @@ nav a {
   font-size:30px;
   font-weight: bold;
   color: #fff;
-  background: #f60;
+  background: rgb(240,65,56);
 }
 
 #lucky-container{
