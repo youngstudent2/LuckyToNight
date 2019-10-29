@@ -1,6 +1,7 @@
 body {
   font: 20px "Hiragino Sans GB", sans-serif;
   background: #eee;
+  background-image: url("bg.jpg");
 }
 
 ul li {
@@ -29,12 +30,11 @@ ul li {
 #buttons{
   padding: 20px;
   width: 250px;
-  background: #ddd;
+  background: rgb(221,221,221,0.2);
   margin: 40px;
   display: block;
   justify-content: center;
   align-items: center;
-
 }
 
 .btn:hover{
@@ -131,7 +131,7 @@ nav a {
 
 #lucky-container{
   width:200px;
-  background:#ddd;
+  background:rgb(221,221,221,0.2);
   padding:20px;
   margin:40px
 }
