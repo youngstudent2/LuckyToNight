@@ -270,24 +270,17 @@ define(function(require, exports, module) {
           go2()
         else{
           that.stop_move = true
-          go2()//stop
-          setTimeout(go2,2200)//start
-          setTimeout(go2,2300)//stop
-          setTimeout(go2,4800)
-          setTimeout(go2,4900)
-          setTimeout(go2,7800)
-          setTimeout(go2,7900)
-          /*
           for(var i=0;i<3;i++){
-            setTimeout(go2,i*2200)
-            setTimeout(go2,3100+i*2200)
+            setTimeout(go3,5+i*2000)
+            setTimeout(go3,2000+i*2000)
           }
-          go2()*/
+          setTimeout(() => {
+            go2()
+            that.stop_move = false
+          },5+3*2000)
+          //问：为什么您开始写屎山代码？
+          //答：昨晚甲方又改需求了嘤嘤嘤o(╥﹏╥)o
         }
-        /*
-        setTimeout(() => {
-          trigger.setAttribute('data-running', 'wait')
-        }, 2010+6*2200);*/
 
       }
       function go3() {
@@ -305,19 +298,24 @@ define(function(require, exports, module) {
       function go3_auto() {
         if(trigger.getAttribute('data-running') === 'running')
           return
-        else trigger.setAttribute('data-running', 'running')
         if(luckys.innerHTML.length>0){
           that.moveLucky()
           luckys.innerHTML = ''
         }
-        go3()
-        for(var i=0;i<15;i++){
-          setTimeout(go3,2000+i*2000)
-        }
-        setTimeout(() => {
-          trigger.setAttribute('data-running', 'wait')
+        if(trigger.getAttribute('data-action') === 'start')
+          go3()
+        else{
+          that.stop_move = true
+          for(var i=0;i<7;i++){
+            setTimeout(go3,5+i*2000)
+            setTimeout(go3,2000+i*2000)
+          }
           
-        }, 30010);
+          setTimeout(() => {
+            go3()
+            that.stop_move = false
+          },5+7*2000)
+        }
       }
       function go4() {
         if (trigger.getAttribute('data-action') === 'start') {
@@ -431,7 +429,6 @@ define(function(require, exports, module) {
         this.s=false
       }
       else {
- 
         this.moveLucky()
       }
       
