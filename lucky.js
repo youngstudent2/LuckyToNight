@@ -185,6 +185,7 @@ define(function(require, exports, module) {
     users: [],
     dis_start:0,
     dis_end:0,
+    stop_move:false,
     init: function(data) {
       this.data = data
     
@@ -261,19 +262,32 @@ define(function(require, exports, module) {
       function go2_auto(){
         if(trigger.getAttribute('data-running') === 'running')
           return
-        else trigger.setAttribute('data-running', 'running')
         if(luckys.innerHTML.length>0){
           that.moveLucky()
-          luckys.innerHTML = ''
-          
-      }
-      go2()
-      for(var i=0;i<7;i++){
-        setTimeout(go2,2000+i*2200)
-      }
-      setTimeout(() => {
-        trigger.setAttribute('data-running', 'wait')
-      }, 2010+6*2200);
+          luckys.innerHTML = ''         
+        }
+        if(trigger.getAttribute('data-action') === 'start')
+          go2()
+        else{
+          that.stop_move = true
+          go2()//stop
+          setTimeout(go2,2200)//start
+          setTimeout(go2,2300)//stop
+          setTimeout(go2,4800)
+          setTimeout(go2,4900)
+          setTimeout(go2,7800)
+          setTimeout(go2,7900)
+          /*
+          for(var i=0;i<3;i++){
+            setTimeout(go2,i*2200)
+            setTimeout(go2,3100+i*2200)
+          }
+          go2()*/
+        }
+        /*
+        setTimeout(() => {
+          trigger.setAttribute('data-running', 'wait')
+        }, 2010+6*2200);*/
 
       }
       function go3() {
@@ -430,7 +444,8 @@ define(function(require, exports, module) {
 
       for(var i=0;i<this.users.length;i++){
         this.users[i].changeName(this.data[this.dis_start+i])
-        this.users[i].start()
+        if(!this.stop_move)
+          this.users[i].start()
       }
     },
 
