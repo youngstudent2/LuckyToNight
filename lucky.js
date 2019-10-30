@@ -271,8 +271,8 @@ define(function(require, exports, module) {
         else{
           that.stop_move = true
           for(var i=0;i<3;i++){
-            setTimeout(go3,5+i*2000)
-            setTimeout(go3,2000+i*2000)
+            setTimeout(go2,5+i*2000)
+            setTimeout(go2,2000+i*2000)
           }
           setTimeout(() => {
             go2()
