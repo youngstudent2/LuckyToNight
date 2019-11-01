@@ -173,13 +173,13 @@ define(function(require, exports, module) {
   }
 
   User.prototype.hitMove = function() {
-    this.left += this._xMove
-    this.top += this._yMove
-
+    if(!this.zooming){
+      this.left += this._xMove
+      this.top += this._yMove
+    }
     this.top = this.top < 0 ? 0 : (this.top > this._maxTop ? this._maxTop : this.top)
     this.left = this.left < 0 ? 0 : (this.left > this._maxLeft ? this._maxLeft : this.left)
-    if(!this.zooming)
-      this.reflow(null, false)
+    this.reflow(null, false)
   }
 
 
