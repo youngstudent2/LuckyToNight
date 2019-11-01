@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 
   var DURATION_MIN = 500
   var DURATION_MAX = 1000
-  var ZOOM_DURATION = 1000
+  var ZOOM_DURATION = 700
   var HIT_SPEED = 20
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
@@ -79,8 +79,8 @@ define(function(require, exports, module) {
     else {
       var x = this.left + this.width / 2
       var y = this.top + this.height / 2
-      this.x += (x - this.x)*320/r(DURATION_MIN,DURATION_MIN)
-      this.y += (y - this.y)*320/r(DURATION_MIN,DURATION_MIN)
+      this.x += (x - this.x)*330/r(DURATION_MIN,DURATION_MIN)
+      this.y += (y - this.y)*330/r(DURATION_MIN,DURATION_MIN)
       this.left = this.x - this.width / 2
       this.top = this.y - this.height / 2 
        this.el.animate({
@@ -178,8 +178,8 @@ define(function(require, exports, module) {
 
     this.top = this.top < 0 ? 0 : (this.top > this._maxTop ? this._maxTop : this.top)
     this.left = this.left < 0 ? 0 : (this.left > this._maxLeft ? this._maxLeft : this.left)
-
-    this.reflow(null, false)
+    if(!this.zooming)
+      this.reflow(null, false)
   }
 
 
