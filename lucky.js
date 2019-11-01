@@ -6,8 +6,8 @@ define(function(require, exports, module) {
   var CANVAS_HEIGHT = 700
   var CANVAS_WIDTH = 900
 
-  var BALL_WIDTH = 50
-  var BALL_HEIGHT = 50
+  var BALL_WIDTH = 70
+  var BALL_HEIGHT = 70
   var LUCKY_BALL_WIDTH = 300
   var LUCKY_BALL_HEIGHT = 300
 
@@ -18,7 +18,7 @@ define(function(require, exports, module) {
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
-  var dis_num = 300 //一次抽奖显示的球的个数
+  var dis_num = 150 //一次抽奖显示的球的个数
 
   function User(name, options) {
     this.name = name
