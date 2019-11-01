@@ -14,7 +14,7 @@ define(function(require, exports, module) {
   var DURATION_MIN = 500
   var DURATION_MAX = 1000
   var ZOOM_DURATION = 1000
-  var HIT_SPEED = 10
+  var HIT_SPEED = 20
 
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
@@ -70,26 +70,29 @@ define(function(require, exports, module) {
   }
 
   User.prototype.reflow = function(callback, direct) {
-    this.x = this.left + this.width / 2
-    this.y = this.top + this.height / 2
-    //this.el[0].style.zIndex = this.zIndex
+     
 
     if (direct) {
       this.el[0].style.left = this.left
       this.el[0].style.top = this.top
     }
     else {
-      
+      var x = this.left + this.width / 2
+      var y = this.top + this.height / 2
+      this.x += (x - this.x)*320/r(DURATION_MIN,DURATION_MIN)
+      this.y += (y - this.y)*320/r(DURATION_MIN,DURATION_MIN)
+      this.left = this.x - this.width / 2
+      this.top = this.y - this.height / 2 
        this.el.animate({
         'left': this.left,
         'top': this.top
-      }, r(DURATION_MIN, DURATION_MAX), 'easeOutBack', callback)
+      }, 18, 'easeOutBack', callback)/**/
      /*
      Velocity(this.el,{
         'left': this.left,
         'top': this.top
       },{
-        duration: r(DURATION_MIN, DURATION_MAX),
+        duration: 8,
         easing: "easeInSine",
         complete: callback
       })*/
@@ -521,7 +524,7 @@ define(function(require, exports, module) {
       }
 
       users.forEach(function(user) {
-        user.hitMove()
+         user.hitMove()
       })
 
       if (hitCount > 0) {
