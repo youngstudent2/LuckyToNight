@@ -29,7 +29,7 @@ ul li {
 #buttons{
   padding: 20px;
   width: 250px;
-  background: rgb(221,221,221,0.2);
+  background: rgb(221,221,221,0);
   margin: 40px;
   display: block;
   justify-content: center;
@@ -130,7 +130,7 @@ nav a {
 
 #lucky-container{
   width:200px;
-  background:rgb(221,221,221,0.2);
+  background:rgb(221,221,221,0);
   padding:20px;
   margin:40px
 }
