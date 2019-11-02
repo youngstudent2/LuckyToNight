@@ -179,6 +179,10 @@ define(function(require, exports, module) {
       this.left += this._xMove
       this.top += this._yMove
     }
+    else{
+      this.left = (CANVAS_WIDTH - this.width) / 2
+      this.top = (CANVAS_HEIGHT - this.height) / 2
+    }
     this.top = this.top < 0 ? 0 : (this.top > this._maxTop ? this._maxTop : this.top)
     this.left = this.left < 0 ? 0 : (this.left > this._maxLeft ? this._maxLeft : this.left)
     this.reflow(null, false)
