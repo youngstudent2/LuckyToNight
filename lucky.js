@@ -15,10 +15,12 @@ define(function(require, exports, module) {
   var DURATION_MAX = 1000
   var ZOOM_DURATION = 700
   var HIT_SPEED = 20
-
+  
   var RIGIDITY = 2 // 弹性系数：2 -钢球 4 - 橡胶球，越大越软，建议小于 10
 
   var dis_num = 150 //一次抽奖显示的球的个数
+  var WAIT_TIME = 2000
+  var HIT_MOVE_SPEED =280
 
   function User(name, options) {
     this.name = name
@@ -79,14 +81,14 @@ define(function(require, exports, module) {
     else {
       var x = this.left + this.width / 2
       var y = this.top + this.height / 2
-      this.x += (x - this.x)*330/r(DURATION_MIN,DURATION_MIN)
-      this.y += (y - this.y)*330/r(DURATION_MIN,DURATION_MIN)
+      this.x += (x - this.x)*HIT_MOVE_SPEED/r(DURATION_MIN,DURATION_MIN)
+      this.y += (y - this.y)*HIT_MOVE_SPEED/r(DURATION_MIN,DURATION_MIN)
       this.left = this.x - this.width / 2
       this.top = this.y - this.height / 2 
        this.el.animate({
         'left': this.left,
         'top': this.top
-      }, 18, 'easeOutBack', callback)/**/
+      }, HIT_SPEED - 2, 'easeOutBack', callback)/**/
      /*
      Velocity(this.el,{
         'left': this.left,
@@ -274,13 +276,13 @@ define(function(require, exports, module) {
         else{
           that.stop_move = true
           for(var i=0;i<3;i++){
-            setTimeout(go2,5+i*2000)
-            setTimeout(go2,2000+i*2000)
+            setTimeout(go2,5+i*WAIT_TIME)
+            setTimeout(go2,(i+1)*WAIT_TIME)
           }
           setTimeout(() => {
             go2()
             that.stop_move = false
-          },5+3*2000)
+          },5+3*WAIT_TIME)
           //问：为什么您开始写屎山代码？
           //答：昨晚甲方又改需求了嘤嘤嘤o(╥﹏╥)o
         }
@@ -310,14 +312,14 @@ define(function(require, exports, module) {
         else{
           that.stop_move = true
           for(var i=0;i<7;i++){
-            setTimeout(go3,5+i*2000)
-            setTimeout(go3,2000+i*2000)
+            setTimeout(go3,5+i*WAIT_TIME)
+            setTimeout(go3,WAIT_TIME+i*WAIT_TIME)
           }
           
           setTimeout(() => {
             go3()
             that.stop_move = false
-          },5+7*2000)
+          },5+7*WAIT_TIME)
         }
       }
       function go4() {
@@ -528,6 +530,7 @@ define(function(require, exports, module) {
       })
 
       if (hitCount > 0) {
+        this.timer && clearTimeout(this.timer)
         this.timer = setTimeout(function() {
           that.hit()
         }, HIT_SPEED)
