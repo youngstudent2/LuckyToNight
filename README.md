@@ -1,5 +1,7 @@
 # LuckyToNight
 
+NJU 计算机科学与技术系 19年迎新晚会抽奖网页
+
 ## 使用Tips
 
 1. 更改总人数：在generateRandomNums.cpp中更改宏定义的maxn并编译运行即可
